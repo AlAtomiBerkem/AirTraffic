@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./FlightSchedule.css";
+import App from "../../../app/App";
 
-const FlightSchedule = () => {
+    const FlightSchedule = () => {
     const [flights, setFlights] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

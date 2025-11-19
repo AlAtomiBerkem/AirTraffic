@@ -1,5 +1,6 @@
 import React from "react";
-import FlightSchedule from "./FlightSchedule";
+import FlightSchedule from "../feature/FlightSchedule/ui/FlightSchedule";
+import './styles/index.css'
 
 function App() {
   return (

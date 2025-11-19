@@ -5,7 +5,7 @@ const axios = require("axios");
 const app = express();
 app.use(cors());
 
-const YANDEX_API_KEY = "fbfb2f4c-6c30-42c2-b5ac-4074e467ac57"; // или используйте process.env.YANDEX_API_KEY
+const YANDEX_API_KEY = "fbfb2f4c-6c30-42c2-b5ac-4074e467ac57";
 
 app.get("/api/flights", async (req, res) => {
     try {
