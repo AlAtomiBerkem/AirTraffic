@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./FlightSchedule.css"; // Создайте этот файл для стилей
+import "./FlightSchedule.css";
 
 const FlightSchedule = () => {
     const [flights, setFlights] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [currentDate] = useState(new Date());
 
     useEffect(() => {
         const fetchFlights = async () => {
             try {
-                const API_KEY = process.env.REACT_APP_YANDEX_API_KEY;
                 const stationCode = "s9600379";
-                const formattedDate = currentDate.toISOString().split('T')[0];
-                const url = `http://localhost:5000/api/flights?station=${stationCode}&date=${formattedDate}`;
+                const now = new Date();
+                const formattedDate = now.toISOString().split('T')[0];
+                const limitData = 8;
+
+                const url = `http://localhost:5000/api/flights?station=${stationCode}&date=${formattedDate}&limit=${limitData}`;
 
                 const response = await axios.get(url);
-                setFlights(response.data || []);
+
+                const filteredFlights = (response.data || [])
+                    .filter(flight => {
+                        const departureTime = new Date(flight.departure);
+                        return departureTime >= now;
+                    })
+                    .slice(0, 8)
+                    .map(flight => {
+                        return {
+                            ...flight,
+                            status: determineFlightStatus(flight)
+                        };
+                    });
+
+                setFlights(filteredFlights);
                 setLoading(false);
             } catch (err) {
                 console.error("Ошибка:", err);
@@ -27,16 +42,33 @@ const FlightSchedule = () => {
         };
 
         fetchFlights();
-    }, [currentDate]);
+    }, []);
+
+    const determineFlightStatus = (flight) => {
+        const now = new Date();
+        const scheduledDeparture = new Date(flight.departure);
+
+        if (flight.is_cancelled || flight.cancelled) {
+            return { text: 'Отменен', className: 'cancelled' };
+        }
+        const actualDeparture = flight.actual_departure ? new Date(flight.actual_departure) : scheduledDeparture;
+        const delayInMinutes = (actualDeparture - scheduledDeparture) / (1000 * 60);
+
+        if (delayInMinutes > 15) {
+            return {
+                text: `Задерживается ${Math.round(delayInMinutes)} мин`,
+                className: 'delayed'
+            };
+        }
+        if (scheduledDeparture < now && !flight.has_departed) {
+            return { text: 'Задерживается', className: 'delayed' };
+        }
+        return { text: 'По расписанию', className: 'on-time' };
+    };
 
     const formatTime = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    };
-
-    const formatFlightDate = (date) => {
-        const options = { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' };
-        return date.toLocaleDateString('ru-RU', options);
     };
 
     if (loading) return (
@@ -56,72 +88,39 @@ const FlightSchedule = () => {
 
     return (
         <div className="flight-board">
-            <header className="board-header">
-                <h1>
-                    <span className="airport-code">KZN</span>
-                    <span className="airport-name">Аэропорт Казань</span>
-                </h1>
-                <div className="board-info">
-                    <div className="board-title">Табло вылетов</div>
-                    <div className="current-date">{formatFlightDate(currentDate)}</div>
-                </div>
-            </header>
-
-            <div className="flight-table">
-                <div className="table-header">
-                    <div className="col-time">Время</div>
-                    <div className="col-number">Рейс</div>
-                    <div className="col-destination">Направление</div>
-                    <div className="col-airline">Авиакомпания</div>
-                    <div className="col-terminal">Терминал</div>
-                    <div className="col-status">Статус</div>
-                </div>
-
-                {flights.length > 0 ? (
-                    flights.map((flight, index) => (
-                        <div key={index} className="flight-row">
-                            <div className="col-time">
-                                <span className="time">{formatTime(flight.departure)}</span>
-                            </div>
-                            <div className="col-number">
-                                <span className="flight-number">{flight.thread.number}</span>
-                            </div>
-                            <div className="col-destination">
-                                <div className="city">{flight.thread.title.split(' — ')[1]}</div>
-                                <div className="airport">{flight.thread.short_title}</div>
-                            </div>
-                            <div className="col-airline">
-                                <div className="airline-logo">
-                                    <img
-                                        src={`https://rasp.yandex.ru/static/images/airline/${flight.thread.carrier.code}.svg`}
-                                        alt={flight.thread.carrier.title}
-                                    />
-                                </div>
-                                <div className="airline-name">{flight.thread.carrier.title}</div>
-                            </div>
-                            <div className="col-terminal">
-                                {flight.terminal && flight.terminal !== "NULL" ? (
-                                    <span className="terminal-badge">{flight.terminal}</span>
-                                ) : '—'}
-                            </div>
-                            <div className="col-status">
-                                <span className={`status ${flight.status ? 'delayed' : 'on-time'}`}>
-                                    {flight.status || 'По расписанию'}
-                                </span>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="no-flights">
-                        <p>На сегодня рейсов не запланировано</p>
-                    </div>
-                )}
+            <div className="table-header">
+                <div className="col-time">Время</div>
+                <div className="col-destination">Направление</div>
+                <div className="col-number">Рейс</div>
+                <div className="col-status">Статус</div>
             </div>
 
-            <footer className="board-footer">
-                <p>Обновлено: {new Date().toLocaleTimeString()}</p>
-                <p>Аэропорт Казань имени Габдуллы Тукая</p>
-            </footer>
+            {flights.length > 0 ? (
+                flights.map((flight, index) => (
+                    <div key={index} className="flight-row">
+                        <div className="col-time">
+                            <span className="time">{formatTime(flight.departure)}</span>
+                        </div>
+                        <div className="col-destination">
+                            <div className="city">
+                                {flight.thread.title.split(' — ')[1] || flight.thread.title}
+                            </div>
+                        </div>
+                        <div className="col-number">
+                            <span className="flight-number">{flight.thread.number}</span>
+                        </div>
+                        <div className="col-status">
+                            <span className={`status ${flight.status.className}`}>
+                                {flight.status.text}
+                            </span>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <div className="no-flights">
+                    <p>На сегодня рейсов не запланировано</p>
+                </div>
+            )}
         </div>
     );
 };
