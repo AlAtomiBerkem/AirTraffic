@@ -24,20 +24,12 @@ const FlightSchedule = () => {
         <div className="flight-board">
             <div className="table-header">
                 <div className="col-time">
-                    Время
-                    <span>TIME</span>
                     </div>
                 <div className="col-destination">
-                    Направление
-                    <span>DIRECTION</span>
                     </div>
                 <div className="col-number">
-                    Рейс
-                    <span>FLIGHT</span>
                     </div>
                 <div className="col-status">
-                    Статус
-                    <span>STATUS</span>
                     </div>
             </div>
 
