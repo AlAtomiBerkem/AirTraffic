@@ -15,7 +15,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     text-transform: uppercase;
-    margin-bottom: 9.6%;
+    margin-bottom: 8.6%;
 }
 
 .table-header > div {
@@ -45,7 +45,7 @@
     display: grid;
     grid-template-columns: 16% 27% 19% 30%;
     gap: 55px;
-    padding: 1.24% 0;
+    padding: 0.85% 0;
     align-items: start;
 }
 
