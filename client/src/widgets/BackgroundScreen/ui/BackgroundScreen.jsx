@@ -1,5 +1,5 @@
 import cls from './BackgroundScreen.module.css'
-import Background from '../../../shared/assets/screens/background2.png'
+import Background from '../../../shared/assets/screens/BackgroundScreen-5:4.png'
 
 const BackgroundScreen = ({children}) => {
 return (

@@ -1,3 +1,27 @@
 @import "reset.css";
 @import "./Acrabat-font.css";
 @import "./Dotf-font.css";
+
+:root {
+    font-size: clamp(12px, 1.6vw, 16px);
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: #000;
+    font-family: "Akrobat", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+}

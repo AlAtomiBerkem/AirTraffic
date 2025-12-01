@@ -2,30 +2,31 @@
     max-width: 95vw;
     height: 100vh;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 2.5rem 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.25rem;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .table-header {
     text-align: center;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 1.25rem;
     text-transform: uppercase;
-    margin-bottom: 8%;
+    margin-bottom: 9.25%;
 }
 
 .table-header > div {
     color: #72D8FF;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;
     font-family: "Akrobat", sans-serif;
     font-weight: 700;
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2.2vw, 2.5rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
@@ -35,7 +36,7 @@
     color: #939090;
     font-family: "Akrobat", sans-serif;
     font-weight: 500;
-    font-size: 32px;
+    font-size: clamp(1.25rem, 1.6vw, 2rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
@@ -43,9 +44,9 @@
 
 .flight-row {
     display: grid;
-    grid-template-columns: 16% 27% 19% 30%;
-    gap: 50px;
-    padding: 0.88% 0;
+    grid-template-columns: 17% 26% 13% 34%;
+    gap: 3rem;
+    padding: 0.8% 0;
     align-items: center;
 }
 
@@ -56,7 +57,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 0.3125rem;
 }
 
 .col-time .time,
@@ -64,7 +65,7 @@
     color: #fff;
     font-family: "Dotf1", sans-serif;
     font-weight: 400;
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
@@ -75,7 +76,7 @@
     color: #fff;
     font-family: "Dotf1", sans-serif;
     font-weight: 400;
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
@@ -87,13 +88,13 @@
     color: #fff;
     font-family: "Dotf1", sans-serif;
     font-weight: 400;
-    font-size: 40px;
+    font-size: clamp(1.5rem, 2.3vw, 2.5rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
     text-transform: uppercase;
     text-align: center;
-    padding: 6px 0;
+    padding: 0.375rem 0;
 }
 
 .status.on-time {
@@ -112,15 +113,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 300px;
+    height: 18.75rem;
 }
 
 .spinner {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 3.125rem;
+    height: 3.125rem;
     animation: spin 1s linear infinite;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 @keyframes spin {
@@ -130,34 +131,46 @@
 
 .error-icon {
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .error-screen button {
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 1.25rem;
+    padding: 0.625rem 1.25rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     cursor: pointer;
 }
 
 .no-flights {
-    padding: 30px;
+    padding: 1.875rem;
     text-align: center;
     font-size: 1.1rem;
 }
 
 .board-footer {
-    margin-top: 20px;
+    margin-top: 1.25rem;
     text-align: center;
     font-size: 0.9rem;
-    padding-top: 15px;
+    padding-top: 0.9375rem;
 }
 
 .flight-number {
     display: flex;
-    margin-left: 35px;
-    word-spacing: 50px;
+    margin-left: 0.2rem;
+    word-spacing: 0.7rem;
     align-items: start;
-
 }
+
+.col-number {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+/* .flight-row.col-time.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0.5rem;
+} */

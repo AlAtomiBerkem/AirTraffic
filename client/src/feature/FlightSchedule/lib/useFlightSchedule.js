@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const STATION_CODE = "s9600379";
-const FLIGHTS_LIMIT = 8;
+const FLIGHTS_LIMIT = 11;
 
 const determineFlightStatus = (flight, now) => {
     const scheduledDeparture = new Date(flight.departure);
@@ -68,6 +68,7 @@ export const useFlightSchedule = () => {
 
         fetchFlights();
     }, []);
+    console.log(flights);
 
     return { flights, loading, error };
 };
