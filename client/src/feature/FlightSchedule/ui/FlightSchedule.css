@@ -16,7 +16,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
     text-transform: uppercase;
-    margin-bottom: 9.25%;
+    margin-bottom: 9.65%;
 }
 
 .table-header > div {
@@ -46,7 +46,7 @@
     display: grid;
     grid-template-columns: 17% 26% 13% 34%;
     gap: 3rem;
-    padding: 0.8% 0;
+    padding: 0.78% 0;
     align-items: center;
 }
 
@@ -76,12 +76,23 @@
     color: #fff;
     font-family: "Dotf1", sans-serif;
     font-weight: 400;
-    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-size: clamp(1.5rem, 2.3vw, 2.5rem);
     font-style: normal;
     line-height: 100%;
     letter-spacing: 0;
     text-transform: uppercase;
     text-wrap: nowrap;
+    margin-left: -10px;
+}
+
+.city-ellipsis {
+    font-size: 0.8em;
+    display: inline-block;
+    transform: translateY(-6%);
+    padding-top:  0;
+    padding-bottom: 0;
+    
+
 }
 
 .status {

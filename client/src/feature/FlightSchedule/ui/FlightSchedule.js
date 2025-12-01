@@ -8,9 +8,14 @@ const extractCity = (title) => {
     return (destination || title).trim();
 };
 
-const truncateCity = (city, maxLength = 12) => {
+const truncateCity = (city, maxLength = 14) => {
     if (city.length <= maxLength) return city;
-    return `${city.slice(0, maxLength - 3)}...`;
+    return (
+        <>
+            {city.slice(0, maxLength - 3)}
+            <span className="city-ellipsis">...</span>
+        </>
+    );
 };
 
 const FlightSchedule = () => {
